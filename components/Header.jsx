@@ -9,6 +9,8 @@ const Header = () => {
   return (
     <header>
         <div className='flex flex-col md:flex-row items-center p-5 bg-gray-500/10 rounded-b-2xl'>
+
+            <div className='absolute top-0 left-0 w-full h-96 bg-gradient-to-br from-pink-500 to-[#0055D1] blur-3xl filter -z-50 opacity-50'/>
             <div>
                 <Image src="https://links.papareact.com//c2cdd5" alt='Trello Logo' width={300} height={100} className='object-contain w-44 md:w-56 pb-10 md:pb-0'/>
             </div>
