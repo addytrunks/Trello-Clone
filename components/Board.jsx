@@ -12,6 +12,8 @@ const Board = () => {
         getBoard()
     },[getBoard])
 
+    console.log(board)
+
     const handleDragEnd = (result) => {
         const {destination,source,type}  = result;
         
@@ -28,30 +30,14 @@ const Board = () => {
         <Droppable droppableId='board' direction='horizontal' type='column'>
             {(provided,snapshot) => (
                 <div {...provided.droppableProps} ref={provided.innerRef} className='grid grid-cols-1 md:grid-cols-3 gap-5 max-w-7xl'>
+                   {Array.from(board.columns.entries()).map(([id,column],index) => (
                     <Column
-                    key={'todo'}
-                    id={'todo'}
-                    status={'todo'}
-                    todos={board["todo"]} 
-                    index={'0'}   
-                    />
-
-                    <Column
-                    key={'inprogress'}
-                    id={'inprogress'}
-                    status={'inprogress'}
-                    todos={board["inprogress"]} 
-                    index={'1'}   
-                    />
-
-                    <Column
-                    key={'done'}
-                    id={'done'}
-                    status={'done'}
-                    todos={board["done"]}  
-                    index={'2'}  
-                    />
-
+                        key={id}
+                        id={id}
+                        todos={column.todos}
+                        index={index}
+                    />))
+                }
                 </div>
             )}
         </Droppable>
