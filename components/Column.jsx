@@ -3,6 +3,7 @@
 import { Draggable, Droppable } from 'react-beautiful-dnd'
 import TodoCard from './TodoCard'
 import { PlusCircleIcon } from '@heroicons/react/24/solid'
+import { useBoardStore } from '@/store/boardStore'
 
 const Column = ({todos,id,index}) => {
 
@@ -11,6 +12,8 @@ const Column = ({todos,id,index}) => {
       'inprogress':"In Progress",
       'done':"Done"
     }
+
+    const [searchString] = useBoardStore((state) => state.searchString)
 
     return (
     <Draggable draggableId={id} index={index}>
@@ -21,12 +24,14 @@ const Column = ({todos,id,index}) => {
               <div {...provided.droppableProps} ref={provided.innerRef} className={`p-3 rounded-xl shadow-sm ${snapshot.isDraggingOver ? 'bg-green-200' : 'bg-white/50'}`}>
                 <h2 className='flex items-center'>
                   <span className='flex-1 font-bold'>{idToColumnName[id]}</span>
-                  <span className='text-gray-500 bg-gray-200 rounded-full font-normal px-2 py-1 text-sm'>{todos?.length}</span>
+                  <span className='text-gray-500 bg-gray-200 rounded-full font-normal px-2 py-1 text-sm'>{searchString ? todos.filter((todo) => todo.title.toLowerCase().includes(searchString.toLowerCase())).length:todos.length}</span>
                 </h2>
 
                 <div className='space-y-2'>
-                  {todos?.map((todo,index) => (
-                    <Draggable key={todo.$id} draggableId={todo.$id} index={index}>
+                  {todos?.map((todo,index) => {
+                    if(searchString && !todo.title.toLowerCase().includes(searchString.toLowerCase()))return null;
+                    return (
+                      <Draggable key={todo.$id} draggableId={todo.$id} index={index}>
                       {(provided) => (
                         <TodoCard
                           todo={todo}
@@ -37,8 +42,9 @@ const Column = ({todos,id,index}) => {
                           dragHandleProps={provided.dragHandleProps}
                         />
                       )}
-                    </Draggable>
-                  ))} 
+                      </Draggable>
+                    )
+                  })} 
                   {provided.placeholder}
 
                   <div className='flex items-end justify-end'>

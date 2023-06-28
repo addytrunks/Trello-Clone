@@ -16,5 +16,7 @@ export const useBoardStore = create((set) => ({
       title:todo.title,
       status:columnId
     })
-  }
+  },
+  searchString:"",
+  setSearchString:(searchString) => set({searchString})
 }))
