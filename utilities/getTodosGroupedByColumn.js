@@ -19,6 +19,5 @@ export const getTodosGroupedByColumn = async () => {
             "image":todo?.image ? todo.image : null
         })
     })
-
     return groupedTodosByColumn
 }
