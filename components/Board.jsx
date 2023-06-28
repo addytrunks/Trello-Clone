@@ -1,19 +1,27 @@
 'use client'
 
 import { useBoardStore } from '@/store/boardStore';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { DragDropContext,Droppable } from 'react-beautiful-dnd';
 import Column from './Column';
 
 const Board = () => {
 
     const [board,getBoard] = useBoardStore((state) =>[state.board,state.getBoard])
-
     useEffect(() => {
         getBoard()
     },[getBoard])
 
-    const handleDragEnd = (result) => {}
+    const handleDragEnd = (result) => {
+        const {destination,source,type}  = result;
+        
+        if(!destination) return;
+
+        // Handle Column Drag
+        if(type === 'column'){
+
+        }
+    }
 
   return (
     <DragDropContext onDragEnd={handleDragEnd}>
@@ -25,7 +33,7 @@ const Board = () => {
                     id={'todo'}
                     status={'todo'}
                     todos={board["todo"]} 
-                    index={'1'}   
+                    index={'0'}   
                     />
 
                     <Column
@@ -33,7 +41,7 @@ const Board = () => {
                     id={'inprogress'}
                     status={'inprogress'}
                     todos={board["inprogress"]} 
-                    index={'2'}   
+                    index={'1'}   
                     />
 
                     <Column
@@ -41,7 +49,7 @@ const Board = () => {
                     id={'done'}
                     status={'done'}
                     todos={board["done"]}  
-                    index={'3'}  
+                    index={'2'}  
                     />
 
                 </div>

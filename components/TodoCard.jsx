@@ -9,6 +9,8 @@ const TodoCard = ({todo,index,draggableProps,dragHandleProps,innerRef,id}) => {
         <p>{todo.title}</p>
         <button className="text-red-500 hover:text-red-600"><XCircleIcon className="ml-5 h-8 w-8"/></button>
       </div>
+
+      {/* Add Image Here */}
     </div>
   )
 }
