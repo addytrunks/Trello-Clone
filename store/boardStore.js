@@ -8,7 +8,6 @@ export const useBoardStore = create((set,get) => ({
   board:{
     columns:new Map()
   },
-
   getBoard: async () => {
     const board = await getTodosGroupedByColumn()
     set({board:board})
