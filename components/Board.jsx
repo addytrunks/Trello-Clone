@@ -27,56 +27,56 @@ const Board = () => {
             setBoardState({...board,columns:rearrangedColumns})
         }else{
             const columns = Array.from(board.columns)
-        const startColIndex = columns[Number(source.droppableId)]
-        const finishColIndex = columns[Number(destination.droppableId)]
+            const startColIndex = columns[Number(source.droppableId)]
+            const finishColIndex = columns[Number(destination.droppableId)]
 
-        const startCol = {
-            id:startColIndex[0],
-            todos:startColIndex[1].todos
-        }
-
-        const finishCol = {
-            id:finishColIndex[0],
-            todos:finishColIndex[1].todos
-        }
-
-        if(!startCol || !finishCol) return;
-        if(source.index === destination.index && startCol === finishCol) return;
-
-        const newTodos = startCol.todos;
-        const [todoMoved] = newTodos.splice(source.index,1)
-
-        if(startCol.id == finishCol.id){
-            // Dragging through same column
-            newTodos.splice(destination.index,0,todoMoved)
-            
-            const newCol = {
-                id:startCol.id,
-                todos:newTodos
+            const startCol = {
+                id:startColIndex[0],
+                todos:startColIndex[1].todos
             }
-            const newColumns = new Map(board.columns)
 
-            newColumns.set(startCol.id,newCol)
-            setBoardState({...board,columns:newColumns})
-        }else{
-            // Dragging through another column
-            const finishTodos = Array.from(finishCol.todos)
-            finishTodos.splice(destination.index,0,todoMoved)
-
-            const newCol = {
-                id:startCol.id,
-                todos:newTodos
+            const finishCol = {
+                id:finishColIndex[0],
+                todos:finishColIndex[1].todos
             }
-            const newColumns = new Map(board.columns)
 
-            newColumns.set(startCol.id,newCol)
-            newColumns.set(finishCol.id,{
-                id:finishCol.id,
-                todos:finishTodos
-            })
-            updateTodoinDB(todoMoved,finishCol.id)
-            setBoardState({...board,columns:newColumns})
-            
+            if(!startCol || !finishCol) return;
+            if(source.index === destination.index && startCol === finishCol) return;
+
+            const newTodos = startCol.todos;
+            const [todoMoved] = newTodos.splice(source.index,1)
+
+            if(startCol.id == finishCol.id){
+                // Dragging through same column
+                newTodos.splice(destination.index,0,todoMoved)
+                
+                const newCol = {
+                    id:startCol.id,
+                    todos:newTodos
+                }
+                const newColumns = new Map(board.columns)
+
+                newColumns.set(startCol.id,newCol)
+                setBoardState({...board,columns:newColumns})
+            }else{
+                // Dragging through another column
+                const finishTodos = Array.from(finishCol.todos)
+                finishTodos.splice(destination.index,0,todoMoved)
+
+                const newCol = {
+                    id:startCol.id,
+                    todos:newTodos
+                }
+                const newColumns = new Map(board.columns)
+
+                newColumns.set(startCol.id,newCol)
+                newColumns.set(finishCol.id,{
+                    id:finishCol.id,
+                    todos:finishTodos
+                })
+                updateTodoinDB(todoMoved,finishCol.id)
+                setBoardState({...board,columns:newColumns})
+                
             }
         }
     }

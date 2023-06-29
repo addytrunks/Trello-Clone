@@ -1,14 +1,13 @@
 'use client'
 
 import Image from 'next/image'
-import React, { useState } from 'react'
 import {MagnifyingGlassIcon,UserCircleIcon} from '@heroicons/react/24/solid'
 import Avatar from 'react-avatar'
 import { useBoardStore } from '@/store/boardStore'
 
 const Header = () => {
 
-    const [searchString,setSearchString] = useBoardStore((state) => [state.searchString,state.setSearchString])
+    const [board,searchString,setSearchString] = useBoardStore((state) => [state.board,state.searchString,state.setSearchString])
 
   return (
     <header>
@@ -32,8 +31,8 @@ const Header = () => {
 
         <div className='flex items-center justify-center px-5 md:py-5'>
             <p className='flex items-center text-sm font-normal pr-5 shadow-xl rounded-xl w-fit bg-white italic max-w-3xl text-[#0055D1] md:p-4 p-3 mb-4'>
-                <UserCircleIcon className='inline-block h-10 w-10 text-[#0055D1] mr-1'/>
-                GPT is summarising your tasks for the day...
+                <UserCircleIcon className={`inline-block h-10 w-10 text-[#0055D1] mr-1`}/>
+                Welcome to the Trello Clone!Feel free to play around!
             </p>
         </div>
     </header>
